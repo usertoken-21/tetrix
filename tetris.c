@@ -10,7 +10,7 @@
 
 #define screen_witdh 10
 #define screen_height 18
-
+/*Hola no se como se hacen las cosas con github (git clone)*/
 /*
 
 - [Check] Borrar lineas bien, a veces no se borran, a veces se borran de mas y a veces no son lasa correctas
