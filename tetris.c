@@ -447,6 +447,8 @@ bool collision(int direction){
   return allow;
 }
 
+
+
 bool rotate(char direction){
   if(pieceid == 2)
   {
@@ -456,10 +458,6 @@ bool rotate(char direction){
   struct cube temp[4];
   int rot = (direction == 'a' ? -1 : 1);
   bool allow = false;
-  for(int i = 0; i < 4; i++)
-  {
-    temp[i] = piece[i];
-  }
 
   for (int i = 0; i < 4; i++)
   {
@@ -484,12 +482,83 @@ bool rotate(char direction){
   {
     for (int i = 0; i < 4; i++)
     {
-      temp1 = piece[i].x - centerx;
-      temp2 = piece[i].y - centery;
-      piece[i].x = (centerx - rot*temp2);
-      piece[i].y = (centery + rot*temp1);
+      piece[i] = temp[i];
     }
   }
+/*
+      else
+      {
+        struct cube pivot[4];
+        for (int i = 0; i < 4; i ++)
+        {
+          pivot[i] = piece[i];
+          piece[i] = temp[i];
+        }
+        if (collision(3))
+        {
+          for (int i = 0; i < 4; i++)
+          {
+            piece[i].x++;
+          }
+          centerx++;
+          allow = true;
+        }else if (collision(4))
+        {
+          for (int i = 0; i < 4; i++)
+          {
+            piece[i].x--;
+          }
+          centerx--;
+          allow = true;
+        }else
+        {
+          for (int i = 0; i < 4; i++)
+          {
+            piece[i] = pivot[i];
+          }
+        }
+      }
+*/
+  else
+  {
+    bool left = true, right = true; 
+    for (int i = 0; i < 4; i++)
+    {
+      if (piece[i].x < 0 || screen[piece[i].x-1][piece[i].y] == 1)
+      {
+        left = false;
+      }
+      if (piece[i].x > screen_witdh || screen[piece[i].x+1][piece[i].y] == 1)
+      {
+        right = false;
+      }
+    }
+    struct cube pivot[4];
+    for (int i = 0; i < 4; i ++)
+    {
+      pivot[i] = piece[i];
+      piece[i] = temp[i];
+    }
+    if (right)
+    {
+      for (int i = 0; i < 4; i++)
+      {
+        piece[i].x--;
+      }
+      centerx--;
+      allow = true;
+    }
+    if (left)
+    {
+      for (int i = 0; i < 4; i++)
+      {
+        piece[i].x++;
+      }
+      centerx++;
+      allow = true;
+    } 
+  }
+  
   return allow;
 }
 
